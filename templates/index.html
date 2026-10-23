@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0d12">
+  <meta name="description" content="Share files with devices on your local network using RustDrop.">
+  <title>RustDrop — Local file sharing</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="RustDrop home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><path d="M16 3.5 27 9.8v12.4L16 28.5 5 22.2V9.8L16 3.5Z" stroke="currentColor" stroke-width="1.6"/><path d="M16 9v14m-5-9 5-5 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="brand-name">Rust<span>Drop</span></span>
+      </a>
+      <nav class="top-nav" aria-label="Main navigation">
+        <a class="nav-link active" href="#overview" aria-current="page">Overview</a>
+        <a class="nav-link" href="#your-files">Your files</a>
+      </nav>
+      <div class="server-status"><span class="status-dot" aria-hidden="true"></span><span>Server running</span></div>
+    </header>
+
+    <main id="overview">
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-line"></span> LOCAL FILE SHARING</p>
+          <h1 id="page-title">Files move better<br>when <span>they’re together.</span></h1>
+          <p class="hero-copy">A simple place to send files between devices on your local network.</p>
+        </div>
+        <div class="hero-note">
+          <span class="note-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4 10.5a12 12 0 0 1 16 0M7.5 14a7 7 0 0 1 9 0M10.5 17.5a2.4 2.4 0 0 1 3 0M12 21h.01" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          </span>
+          <span><strong>On your network</strong><small>Ready for nearby devices</small></span>
+        </div>
+      </section>
+
+      <div class="content-grid">
+        <div class="main-column">
+          <section class="panel upload-panel" aria-labelledby="upload-title">
+            <div class="panel-heading">
+              <div class="section-title-wrap">
+                <span class="step-number">01</span>
+                <div><p class="eyebrow">START HERE</p><h2 id="upload-title">Add files</h2></div>
+              </div>
+              <span class="subtle-label">UPLOAD</span>
+            </div>
+
+            <div class="drop-zone" id="drop-zone" tabindex="0" aria-label="File drop area. Choose files or drag files here.">
+              <input id="file-input" class="visually-hidden" type="file" multiple>
+              <div class="upload-symbol" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none"><path d="M24 31V10m0 0-8 8m8-8 8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 29v8a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2v-8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <h3>Drop files to get started</h3>
+              <p class="drop-description">or <button class="text-button" id="choose-files" type="button">browse your device</button></p>
+              <p class="drop-hint">Choose one or more files to share with nearby devices.</p>
+            </div>
+
+            <div class="queue-panel" id="queue-panel" hidden>
+              <div class="queue-heading">
+                <div><h3>Selected files <span class="count-badge" id="file-count">0</span></h3><p>Review your files, then upload them to this device.</p></div>
+                <button class="quiet-button" id="clear-files" type="button">Clear</button>
+              </div>
+              <ul class="file-queue" id="file-queue" aria-live="polite"></ul>
+              <button class="primary-button" id="upload-files" type="button">Upload files <span class="button-arrow" aria-hidden="true">↗</span></button>
+            </div>
+          </section>
+
+          <section class="panel files-panel" id="your-files" aria-labelledby="files-title">
+            <div class="panel-heading">
+              <div class="section-title-wrap">
+                <span class="step-number">02</span>
+                <div><p class="eyebrow">YOUR LIBRARY</p><h2 id="files-title">Shared files</h2></div>
+              </div>
+              <span class="file-total">0 ITEMS</span>
+            </div>
+            <div class="empty-state" id="empty-state">
+              <div class="empty-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none"><path d="M10 14.5A2.5 2.5 0 0 1 12.5 12h8l3 3h12A2.5 2.5 0 0 1 38 17.5v16a2.5 2.5 0 0 1-2.5 2.5h-23a2.5 2.5 0 0 1-2.5-2.5v-19Z" stroke="currentColor" stroke-width="1.7"/><path d="M17 25h14m-7-7v14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+              </div>
+              <h3>No shared files yet</h3>
+              <p>Uploaded files will appear here for nearby devices to download.</p>
+            </div>
+            <ul class="shared-file-list" id="shared-file-list" aria-live="polite"></ul>
+          </section>
+        </div>
+
+        <aside class="panel guide-panel" aria-labelledby="guide-title">
+          <div class="guide-topline"><span class="guide-icon" aria-hidden="true">✳</span><span class="subtle-label">QUICK GUIDE</span></div>
+          <h2 id="guide-title">Share in a few steps.</h2>
+          <p class="guide-copy">RustDrop is designed for devices connected to the same Wi-Fi network.</p>
+          <ol class="guide-list">
+            <li><span>1</span><p><strong>Connect to the same Wi-Fi</strong><small>Use the same trusted local network on both devices.</small></p></li>
+            <li><span>2</span><p><strong>Find this computer's Wi-Fi IP</strong><small>On Windows, open PowerShell and run <code>ipconfig</code>. Under Wi-Fi, note the IPv4 Address, for example <code>192.168.0.107</code>.</small></p></li>
+            <li><span>3</span><p><strong>Open RustDrop on your phone</strong><small>On the same Wi-Fi, visit <code>http://192.168.0.107:3000</code>. Replace the example IP with the IPv4 Address from step 2.</small></p></li>
+            <li><span>4</span><p><strong>Upload or download files</strong><small>Upload files on either device. They will appear under Shared files on both devices to download.</small></p></li>
+          </ol>
+          <div class="guide-footer"><span class="footer-dot" aria-hidden="true"></span><p>Built for your local network<br><small>This page uses an unencrypted HTTP connection.</small></p></div>
+        </aside>
+      </div>
+      <footer class="page-footer"><span>RUSTDROP <span class="footer-separator">/</span> LOCAL FILE SHARING</span><span>Simple transfers, close to home.</span></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
